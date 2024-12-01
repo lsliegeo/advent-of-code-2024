@@ -1,0 +1,13 @@
+target-version = "py312"
+
+line-length = 100
+
+[format]
+quote-style = "single"
+
+[lint]
+select = [
+    "E", # pycodestyle
+    "UP", # pyupgrade
+    "I", # isort
+]
