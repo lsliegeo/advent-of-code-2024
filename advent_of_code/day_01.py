@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter
 
 from util.input_util import get_input
 
@@ -20,11 +20,8 @@ def part2(input_data: str) -> int:
     left = [int(l.split()[0]) for l in input_data.splitlines()]
     right = [int(l.split()[1]) for l in input_data.splitlines()]
 
-    right_to_count = defaultdict(int)
-    for i in right:
-        right_to_count[i] += 1
-
-    return sum(i * right_to_count[i] for i in left)
+    right_counts = Counter(right)
+    return sum(i * right_counts[i] for i in left)
 
 
 if __name__ == '__main__':
