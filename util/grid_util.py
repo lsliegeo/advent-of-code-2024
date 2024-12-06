@@ -82,6 +82,11 @@ class Coordinate:
     def __repr__(self) -> str:
         return f'({self.x}, {self.y})'
 
+    def __lt__(self, other):
+        if not isinstance(other, Coordinate):
+            raise NotImplementedError()
+        return (self.x, self.y) < (other.x, other.y)
+
     def step(self, direction: Direction, amount: int = 1):
         assert isinstance(direction, Direction)
         match direction:
