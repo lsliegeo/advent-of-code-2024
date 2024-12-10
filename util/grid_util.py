@@ -3,7 +3,9 @@ from __future__ import annotations
 import abc
 import dataclasses
 from collections import UserDict, UserList
+from collections.abc import Callable
 from enum import Enum
+from typing import Any
 
 
 class Direction(Enum):
@@ -197,7 +199,15 @@ class ListGrid(Grid, UserList):
     """
 
     def to_string(self, filler: str = '.') -> list[str]:
-        return [''.join(value.value if isinstance(value, Enum) else value for value in line) for line in self.data]
+        return [
+            ''.join(
+                value.value if isinstance(value, Enum)
+                else filler if value is None
+                else str(value)
+                for value in line
+            )
+            for line in self.data
+        ]  # fmt: skip
 
     @property
     def min_x(self) -> int:
@@ -216,5 +226,5 @@ class ListGrid(Grid, UserList):
         return len(self.data[0]) - 1
 
     @classmethod
-    def from_input_string(cls, input_data: str) -> ListGrid:
-        return cls([list(line) for line in input_data.splitlines()])
+    def from_input_string(cls, input_data: str, cast: Callable[[str], Any] = lambda x: x) -> ListGrid:
+        return cls([[cast(char) for char in line] for line in input_data.splitlines()])
