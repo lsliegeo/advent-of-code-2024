@@ -3,7 +3,7 @@ from __future__ import annotations
 import abc
 import dataclasses
 from collections import UserDict, UserList
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from enum import Enum
 from typing import Any
 
@@ -106,6 +106,12 @@ class Coordinate:
             case _:
                 y_diff = 0
         return Coordinate(self.x + x_diff * amount, self.y + y_diff * amount)
+
+    def steps(self, direction: Direction) -> Iterable[Coordinate]:
+        current_position = self
+        while True:
+            current_position = current_position.step(direction)
+            yield current_position
 
     def neighbours(self, diagonal: bool) -> dict[Direction, Coordinate]:
         directions = list(Direction) if diagonal else Direction.orthogonal_directions()
