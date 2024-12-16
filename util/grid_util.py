@@ -65,6 +65,10 @@ class Direction(Enum):
             mapping = {v: k for k, v in mapping.items()}
         return mapping[direction]
 
+    def __lt__(self, other):
+        # not really useful, but this allows for sorting
+        return self.value < other.value
+
 
 @dataclasses.dataclass(frozen=True)
 class Coordinate:
